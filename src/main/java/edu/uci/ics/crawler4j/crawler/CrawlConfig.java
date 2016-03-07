@@ -26,18 +26,26 @@ import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 
 import edu.uci.ics.crawler4j.crawler.authentication.AuthInfo;
-
+/*
+ * 爬取配置
+ */
 public class CrawlConfig {
 
   /**
    * The folder which will be used by crawler for storing the intermediate
    * crawl data. The content of this folder should not be modified manually.
    */
+	/**
+	 * 爬取数据存储文件夹
+	 */
   private String crawlStorageFolder;
 
   /**
    * If this feature is enabled, you would be able to resume a previously
    * stopped/crashed crawl. However, it makes crawling slightly slower
+   */
+  /**
+   * 是否可重新开始/继续
    */
   private boolean resumableCrawling = false;
 
@@ -45,11 +53,17 @@ public class CrawlConfig {
    * Maximum depth of crawling For unlimited depth this parameter should be
    * set to -1
    */
+  /**
+   * 爬取深度，默认无限制-1
+   */
   private int maxDepthOfCrawling = -1;
 
   /**
    * Maximum number of pages to fetch For unlimited number of pages, this
    * parameter should be set to -1
+   */
+  /**
+   * 爬取页面数，默认无限制-1
    */
   private int maxPagesToFetch = -1;
 
@@ -57,10 +71,16 @@ public class CrawlConfig {
    * user-agent string that is used for representing your crawler to web
    * servers. See http://en.wikipedia.org/wiki/User_agent for more details
    */
+  /**
+   * 用户代理字符串
+   */
   private String userAgentString = "crawler4j (https://github.com/yasserg/crawler4j/)";
 
   /**
    * Default request header values.
+   */
+  /**
+   * 请求头
    */
   private Collection<BasicHeader> defaultHeaders = new HashSet<BasicHeader>();
 
@@ -68,45 +88,72 @@ public class CrawlConfig {
    * Politeness delay in milliseconds (delay between sending two requests to
    * the same host).
    */
+  /**
+   * 请求间隔/礼貌间隔
+   */
   private int politenessDelay = 200;
 
   /**
    * Should we also crawl https pages?
+   */
+  /**
+   * 是否爬取https页面
    */
   private boolean includeHttpsPages = true;
 
   /**
    * Should we fetch binary content such as images, audio, ...?
    */
+  /**
+   * 是否爬取二进制内容，如图片，声音
+   */
   private boolean includeBinaryContentInCrawling = false;
   
   /**
    * Should we process binary content such as image, audio, ... using TIKA?
+   */
+  /**
+   * 是否处理二进制文件内容
    */
   private boolean processBinaryContentInCrawling = false;
 
   /**
    * Maximum Connections per host
    */
+  /**
+   * 每个服务器最大连接数
+   */
   private int maxConnectionsPerHost = 100;
 
   /**
    * Maximum total connections
+   */
+  /**
+   * 最大连接数
    */
   private int maxTotalConnections = 100;
 
   /**
    * Socket timeout in milliseconds
    */
+  /**
+   * socket超时时间
+   */
   private int socketTimeout = 20000;
 
   /**
    * Connection timeout in milliseconds
    */
+  /**
+   * 连接超时
+   */
   private int connectionTimeout = 30000;
 
   /**
    * Max number of outgoing links which are processed from a page
+   */
+  /**
+   * 最多外链数
    */
   private int maxOutgoingLinksToFollow = 5000;
 
@@ -114,10 +161,16 @@ public class CrawlConfig {
    * Max allowed size of a page. Pages larger than this size will not be
    * fetched.
    */
+  /**
+   * 最大下载大小
+   */
   private int maxDownloadSize = 1048576;
 
   /**
    * Should we follow redirects?
+   */
+  /**
+   * 是否跟踪重定向
    */
   private boolean followRedirects = true;
 
@@ -126,10 +179,16 @@ public class CrawlConfig {
    * it can be loaded from the embedded tld-names.zip file that was obtained from
    * https://publicsuffix.org/list/effective_tld_names.dat
    */
+  /**
+   * TLD顶级域名更新top-level-domain
+   */
   private boolean onlineTldListUpdate = false;
 
   /**
    * Should the crawler stop running when the queue is empty?
+   */
+  /**
+   * 是否在队列为空的时候停止
    */
   private boolean shutdownOnEmptyQueue = true;
   
@@ -137,11 +196,17 @@ public class CrawlConfig {
    * If crawler should run behind a proxy, this parameter can be used for
    * specifying the proxy host.
    */
+  /**
+   * 代理主机
+   */
   private String proxyHost = null;
 
   /**
    * If crawler should run behind a proxy, this parameter can be used for
    * specifying the proxy port.
+   */
+  /**
+   * 代理主机端口
    */
   private int proxyPort = 80;
 
@@ -150,6 +215,9 @@ public class CrawlConfig {
    * authentication in proxy, this parameter can be used for specifying the
    * username.
    */
+  /**
+   * 代理用户名
+   */
   private String proxyUsername = null;
 
   /**
@@ -157,10 +225,16 @@ public class CrawlConfig {
    * authentication in proxy, this parameter can be used for specifying the
    * password.
    */
+  /**
+   * 代理密码
+   */
   private String proxyPassword = null;
 
   /**
    * List of possible authentications needed by crawler
+   */
+  /**
+   * 验证信息集合
    */
   private List<AuthInfo> authInfos;
 
@@ -168,6 +242,10 @@ public class CrawlConfig {
    * Validates the configs specified by this instance.
    *
    * @throws Exception on Validation fail
+   */
+  /**
+   * 验证必须配置是否通过
+   * @throws Exception
    */
   public void validate() throws Exception {
     if (crawlStorageFolder == null) {

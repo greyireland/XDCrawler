@@ -38,6 +38,7 @@ import edu.uci.ics.crawler4j.util.Util;
 public class DocIDServer extends Configurable {
   private static final Logger logger = LoggerFactory.getLogger(DocIDServer.class);
 
+  //文档id数据库
   private final Database docIDsDB;
   private static final String DATABASE_NAME = "DocIDs";
 
@@ -99,6 +100,7 @@ public class DocIDServer extends Configurable {
         }
 
         ++lastDocID;
+        //添加一个docid到集合中
         docIDsDB.put(null, new DatabaseEntry(url.getBytes()), new DatabaseEntry(Util.int2ByteArray(lastDocID)));
         return lastDocID;
       } catch (Exception e) {

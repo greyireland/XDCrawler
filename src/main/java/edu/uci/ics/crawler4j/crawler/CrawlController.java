@@ -49,6 +49,11 @@ import java.util.List;
  *
  * @author Yasser Ganjisaffar
  */
+/**
+ * 爬取控制器，负责管理每一个爬取线程，创建爬取线程，监控爬取进度
+ * @author tengyu
+ *
+ */
 public class CrawlController extends Configurable {
 
   static final Logger logger = LoggerFactory.getLogger(CrawlController.class);
@@ -57,16 +62,25 @@ public class CrawlController extends Configurable {
    * The 'customData' object can be used for passing custom crawl-related
    * configurations to different components of the crawler.
    */
+  /**
+   * 用户配置
+   */
   protected Object customData;
 
   /**
    * Once the crawling session finishes the controller collects the local data
    * of the crawler threads and stores them in this List.
    */
+  /**
+   * 线程集合
+   */
   protected List<Object> crawlersLocalData = new ArrayList<>();
 
   /**
    * Is the crawling of this session finished?
+   */
+  /**
+   * 线程爬取是否完成
    */
   protected boolean finished;
 
@@ -74,13 +88,21 @@ public class CrawlController extends Configurable {
    * Is the crawling session set to 'shutdown'. Crawler threads monitor this
    * flag and when it is set they will no longer process new pages.
    */
+  /**
+   * 是否立即停止
+   */
   protected boolean shuttingDown;
-
+  /**
+   * 页面抓取器
+   */
   protected PageFetcher pageFetcher;
   protected RobotstxtServer robotstxtServer;
   protected Frontier frontier;
   protected DocIDServer docIdServer;
 
+  /**
+   * 线程锁
+   */
   protected final Object waitingLock = new Object();
   protected final Environment env;
 

@@ -17,6 +17,11 @@
 
 package edu.uci.ics.crawler4j.robotstxt;
 
+/**
+ * 抓取器规范配置
+ * @author tengyu
+ *
+ */
 public class RobotstxtConfig {
 
   /**

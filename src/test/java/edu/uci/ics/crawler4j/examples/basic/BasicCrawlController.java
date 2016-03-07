@@ -42,16 +42,19 @@ public class BasicCrawlController {
 
     /*
      * crawlStorageFolder is a folder where intermediate crawl data is
-     * stored.
+     * stored.//告诉我存储文件夹
      */
     String crawlStorageFolder = args[0];
 
     /*
      * numberOfCrawlers shows the number of concurrent threads that should
-     * be initiated for crawling.
+     * be initiated for crawling.//告诉我并发线程数量
      */
     int numberOfCrawlers = Integer.parseInt(args[1]);
 
+    /*
+     * 构造抓取配置参数
+     */
     CrawlConfig config = new CrawlConfig();
 
     config.setCrawlStorageFolder(crawlStorageFolder);
@@ -66,7 +69,7 @@ public class BasicCrawlController {
      * You can set the maximum crawl depth here. The default value is -1 for
      * unlimited depth
      */
-    config.setMaxDepthOfCrawling(2);
+    config.setMaxDepthOfCrawling(1);
 
     /*
      * You can set the maximum number of pages to crawl. The default value

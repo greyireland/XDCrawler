@@ -53,6 +53,9 @@ public class WebCrawler implements Runnable {
   /**
    * The id associated to the crawler thread running this instance
    */
+  /**
+   * 爬取线程id
+   */
   protected int myId;
 
   /**
@@ -60,20 +63,32 @@ public class WebCrawler implements Runnable {
    * reference to the controller can be used for getting configurations of the
    * current crawl or adding new seeds during runtime.
    */
+  /**
+   * 线程的控制器
+   */
   protected CrawlController myController;
 
   /**
    * The thread within which this crawler instance is running.
+   */
+  /**
+   * 线程实例
    */
   private Thread myThread;
 
   /**
    * The parser that is used by this crawler instance to parse the content of the fetched pages.
    */
+  /**
+   * 解析器
+   */
   private Parser parser;
 
   /**
    * The fetcher that is used by this crawler instance to fetch the content of pages from the web.
+   */
+  /**
+   * 页面抓取器
    */
   private PageFetcher pageFetcher;
 
@@ -81,15 +96,24 @@ public class WebCrawler implements Runnable {
    * The RobotstxtServer instance that is used by this crawler instance to
    * determine whether the crawler is allowed to crawl the content of each page.
    */
+  /**
+   * RobotsServer决定是否要抓取每一个页面的内容
+   */
   private RobotstxtServer robotstxtServer;
 
   /**
    * The DocIDServer that is used by this crawler instance to map each URL to a unique docid.
    */
+  /**
+   * 匹配每一个URL到一个独一无二的文档id
+   */
   private DocIDServer docIdServer;
 
   /**
    * The Frontier object that manages the crawl queue.
+   */
+  /**
+   * 抓取队列
    */
   private Frontier frontier;
 
@@ -98,6 +122,9 @@ public class WebCrawler implements Runnable {
    * mainly used by the controller to detect whether all of the crawler
    * instances are waiting for new URLs and therefore there is no more work
    * and crawling can be stopped.
+   */
+  /**
+   * 是否等待新的URL
    */
   private boolean isWaitingForNewURLs;
 
@@ -250,6 +277,9 @@ public class WebCrawler implements Runnable {
     return null;
   }
 
+  /**
+   * 开启线程
+   */
   @Override
   public void run() {
     onStart();
@@ -313,6 +343,10 @@ public class WebCrawler implements Runnable {
     // Sub-classed should override this to add their custom functionality
   }
 
+  /**
+   * 处理页面
+   * @param curURL
+   */
   private void processPage(WebURL curURL) {
     PageFetchResult fetchResult = null;
     try {

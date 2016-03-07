@@ -34,6 +34,12 @@ public class RobotstxtParser {
   private static final int PATTERNS_DISALLOW_LENGTH = 9;
   private static final int PATTERNS_ALLOW_LENGTH = 6;
 
+  /**
+   * 解析主机不能抓取的页面
+   * @param content
+   * @param myUserAgent
+   * @return
+   */
   public static HostDirectives parse(String content, String myUserAgent) {
 
     HostDirectives directives = null;

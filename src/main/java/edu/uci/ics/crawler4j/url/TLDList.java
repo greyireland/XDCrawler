@@ -18,10 +18,15 @@ import org.slf4j.LoggerFactory;
  * This class is a singleton which obtains a list of TLDs (from online or a local file) in order to compare against
  * those TLDs
  */
+/**
+ * 顶级域名列表
+ * @author tengyu
+ *
+ */
 public class TLDList {
 
   private static final String TLD_NAMES_ONLINE_URL = "https://publicsuffix.org/list/effective_tld_names.dat";
-  private static final String TLD_NAMES_TXT_FILENAME = "tld-names.txt";
+  private static final String TLD_NAMES_TXT_FILENAME = "tld-names.txt";//本地缓存列表
   private static final Logger logger = LoggerFactory.getLogger(TLDList.class);
 
   private static boolean onlineUpdate = false;
@@ -30,7 +35,7 @@ public class TLDList {
   private static final TLDList instance = new TLDList(); // Singleton
 
   private TLDList() {
-    if (onlineUpdate) {
+    if (onlineUpdate) {//是否联网自动更新
       URL url;
       try {
         url = new URL(TLD_NAMES_ONLINE_URL);
@@ -93,6 +98,10 @@ public class TLDList {
   /**
    * If {@code online} is set to true, the list of TLD files will be downloaded and refreshed, otherwise the one
    * cached in src/main/resources/tld-names.txt will be used.
+   */
+  /**
+   * 设置在线自动更新
+   * @param online
    */
   public static void setUseOnline(boolean online) {
     onlineUpdate = online;

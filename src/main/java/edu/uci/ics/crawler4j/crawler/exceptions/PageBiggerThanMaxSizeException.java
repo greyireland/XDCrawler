@@ -4,6 +4,11 @@ package edu.uci.ics.crawler4j.crawler.exceptions;
  * Created by Avi Hayun on 12/8/2014.
  * Thrown when trying to fetch a page which is bigger than allowed size
  */
+/**
+ * 抓取页面超过最大设定值异常
+ * @author tengyu
+ *
+ */
 public class PageBiggerThanMaxSizeException extends Exception {
   long pageSize;
 

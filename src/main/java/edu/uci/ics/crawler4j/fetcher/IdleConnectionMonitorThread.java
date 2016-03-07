@@ -20,7 +20,11 @@ package edu.uci.ics.crawler4j.fetcher;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-
+/**
+ * 监控线程
+ * @author tengyu
+ *
+ */
 public class IdleConnectionMonitorThread extends Thread {
 
   private final PoolingHttpClientConnectionManager connMgr;
@@ -31,6 +35,9 @@ public class IdleConnectionMonitorThread extends Thread {
     this.connMgr = connMgr;
   }
 
+  /**
+   * 线程循环结构，线程调用start（）开始执行
+   */
   @Override
   public void run() {
     try {

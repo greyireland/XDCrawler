@@ -1,5 +1,9 @@
 package edu.uci.ics.crawler4j.parser;
-
+/**
+ * url和它对应的anchor锚点文字
+ * @author tengyu
+ *
+ */
 public class ExtractedUrlAnchorPair {
 
   private String href;

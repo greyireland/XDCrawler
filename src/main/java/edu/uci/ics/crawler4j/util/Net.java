@@ -13,7 +13,9 @@ import edu.uci.ics.crawler4j.url.WebURL;
  */
 public class Net {
   private static final Pattern pattern = initializePattern();
-
+  /*
+   * 从字符串中抽取URL
+   */
   public static Set<WebURL> extractUrls(String input) {
     Set<WebURL> extractedUrls = new HashSet<>();
 

@@ -43,6 +43,11 @@ import edu.uci.ics.crawler4j.util.Util;
 /**
  * @author Yasser Ganjisaffar
  */
+/**
+ * 解析基类
+ * @author tengyu
+ *
+ */
 public class Parser extends Configurable {
 
   protected static final Logger logger = LoggerFactory.getLogger(Parser.class);
@@ -56,8 +61,15 @@ public class Parser extends Configurable {
     parseContext = new ParseContext();
   }
 
+  /**
+   * 将page对象中的数据解析到对应的pageData中
+   * @param page
+   * @param contextURL
+   * @throws NotAllowedContentException
+   * @throws ParseException
+   */
   public void parse(Page page, String contextURL) throws NotAllowedContentException, ParseException {
-    if (Util.hasBinaryContent(page.getContentType())) { // BINARY
+    if (Util.hasBinaryContent(page.getContentType())) { // BINARY，如图片，声音
       BinaryParseData parseData = new BinaryParseData();
       if (config.isIncludeBinaryContentInCrawling()) {
         if (config.isProcessBinaryContentInCrawling()) {
@@ -73,7 +85,7 @@ public class Parser extends Configurable {
       } else {
         throw new NotAllowedContentException();
       }
-    } else if (Util.hasPlainTextContent(page.getContentType())) { // plain Text
+    } else if (Util.hasPlainTextContent(page.getContentType())) { // plain Text,全是文本
       try {
         TextParseData parseData = new TextParseData();
         if (page.getContentCharset() == null) {
@@ -87,7 +99,7 @@ public class Parser extends Configurable {
         logger.error("{}, while parsing: {}", e.getMessage(), page.getWebURL().getURL());
         throw new ParseException();
       }
-    } else { // isHTML
+    } else { // isHTML，html页面，有<html>标签
       Metadata metadata = new Metadata();
       HtmlContentHandler contentHandler = new HtmlContentHandler();
       try (InputStream inputStream = new ByteArrayInputStream(page.getContentData())) {
@@ -117,6 +129,7 @@ public class Parser extends Configurable {
       }
 
       int urlCount = 0;
+      //解析html中的外链
       for (ExtractedUrlAnchorPair urlAnchorPair : contentHandler.getOutgoingUrls()) {
 
         String href = urlAnchorPair.getHref();
@@ -133,7 +146,7 @@ public class Parser extends Configurable {
             webURL.setURL(url);
             webURL.setTag(urlAnchorPair.getTag());
             webURL.setAnchor(urlAnchorPair.getAnchor());
-            outgoingUrls.add(webURL);
+            outgoingUrls.add(webURL);//加到外链集合中
             urlCount++;
             if (urlCount > config.getMaxOutgoingLinksToFollow()) {
               break;

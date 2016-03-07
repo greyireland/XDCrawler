@@ -20,6 +20,11 @@ package edu.uci.ics.crawler4j.robotstxt;
 /**
  * @author Yasser Ganjisaffar
  */
+/**
+ * 主机给出可以抓取和不能抓取的页面
+ * @author tengyu
+ *
+ */
 public class HostDirectives {
 
   // If we fetched the directives for this host more than

@@ -23,6 +23,9 @@ package edu.uci.ics.crawler4j.crawler;
  *
  * @author Yasser Ganjisaffar
  */
+/*
+ * 可扩展配置接口
+ */
 public abstract class Configurable {
 
   protected CrawlConfig config;

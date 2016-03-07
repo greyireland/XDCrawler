@@ -34,6 +34,11 @@ import edu.uci.ics.crawler4j.util.Util;
 /**
  * @author Yasser Ganjisaffar
  */
+/**
+ * 工作队列
+ * @author tengyu
+ *
+ */
 public class WorkQueues {
   private final Database urlsDB;
   private final Environment env;
@@ -68,7 +73,11 @@ public class WorkQueues {
   protected Cursor openCursor(Transaction txn) {
     return urlsDB.openCursor(txn, null);
   }
-
+  /**
+   * 获取url集合
+   * @param max
+   * @return
+   */
   public List<WebURL> get(int max) {
     synchronized (mutex) {
       List<WebURL> results = new ArrayList<>(max);
@@ -120,14 +129,23 @@ public class WorkQueues {
    * If depth is also equal, those found earlier (therefore, smaller docid) will
    * be crawled earlier.
    */
+  /**
+   * 设置URL爬取的次序
+   * @param url
+   * @return
+   */
   protected static DatabaseEntry getDatabaseEntryKey(WebURL url) {
     byte[] keyData = new byte[6];
-    keyData[0] = url.getPriority();
-    keyData[1] = ((url.getDepth() > Byte.MAX_VALUE) ? Byte.MAX_VALUE : (byte) url.getDepth());
-    Util.putIntInByteArray(url.getDocid(), keyData, 2);
+    keyData[0] = url.getPriority();//优先级，数字小的优先级高
+    keyData[1] = ((url.getDepth() > Byte.MAX_VALUE) ? Byte.MAX_VALUE : (byte) url.getDepth());//深度
+    Util.putIntInByteArray(url.getDocid(), keyData, 2);//文档id
     return new DatabaseEntry(keyData);
   }
 
+  /**
+   * 添加url到数据库
+   * @param url
+   */
   public void put(WebURL url) {
     DatabaseEntry value = new DatabaseEntry();
     webURLBinding.objectToEntry(url, value);

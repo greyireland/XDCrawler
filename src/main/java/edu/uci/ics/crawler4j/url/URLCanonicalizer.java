@@ -34,6 +34,11 @@ import java.util.Objects;
  *
  * @author Yasser Ganjisaffar
  */
+/**
+ * URL规范
+ * @author tengyu
+ *
+ */
 public class URLCanonicalizer {
 
   public static String getCanonicalURL(String url) {
@@ -145,6 +150,11 @@ public class URLCanonicalizer {
    *            Parameter map whose name-value pairs are in order of insertion.
    * @return Canonical form of query string.
    */
+  /**
+   * 规范查询字符串
+   * @param paramsMap
+   * @return
+   */
   private static String canonicalize(final LinkedHashMap<String, String> paramsMap) {
     if ((paramsMap == null) || paramsMap.isEmpty()) {
       return "";
@@ -176,6 +186,11 @@ public class URLCanonicalizer {
    * @param string
    *            Decoded string.
    * @return Encoded string per RFC 3986.
+   */
+  /**
+   * 编码转换
+   * @param string
+   * @return
    */
   private static String percentEncodeRfc3986(String string) {
     try {

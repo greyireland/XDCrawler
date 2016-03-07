@@ -17,12 +17,14 @@
 
 package edu.uci.ics.crawler4j.util;
 
-
 /**
  * @author Yasser Ganjisaffar
  */
+/*
+ * 字节转换工具类
+ */
 public class Util {
-
+	
   public static byte[] long2ByteArray(long l) {
     byte[] array = new byte[8];
     int i;
@@ -76,7 +78,7 @@ public class Util {
 
   public static boolean hasPlainTextContent(String contentType) {
     String typeStr = (contentType != null) ? contentType.toLowerCase() : "";
-
+    String a="";
     return typeStr.contains("text") && !typeStr.contains("html");
   }
 

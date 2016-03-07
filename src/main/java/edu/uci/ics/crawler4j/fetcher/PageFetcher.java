@@ -76,15 +76,30 @@ import edu.uci.ics.crawler4j.url.WebURL;
 public class PageFetcher extends Configurable {
   protected static final Logger logger = LoggerFactory.getLogger(PageFetcher.class);
 
+  /**
+   * 线程连接池管理
+   */
   protected PoolingHttpClientConnectionManager connectionManager;
+  /**
+   * 安全的HttpClient
+   */
   protected CloseableHttpClient httpClient;
+  /**
+   * 互斥锁
+   */
   protected final Object mutex = new Object();
   protected long lastFetchTime = 0;
+  /**
+   * 监控线程
+   */
   protected IdleConnectionMonitorThread connectionMonitorThread = null;
 
   public PageFetcher(CrawlConfig config) {
     super(config);
 
+    /**
+     * 请求配置
+     */
     RequestConfig requestConfig =
         RequestConfig.custom().setExpectContinueEnabled(false).setCookieSpec(CookieSpecs.DEFAULT)
                      .setRedirectsEnabled(false).setSocketTimeout(config.getSocketTimeout())
@@ -92,6 +107,7 @@ public class PageFetcher extends Configurable {
 
     RegistryBuilder<ConnectionSocketFactory> connRegistryBuilder = RegistryBuilder.create();
     connRegistryBuilder.register("http", PlainConnectionSocketFactory.INSTANCE);
+    //是否处理是Https的网页
     if (config.isIncludeHttpsPages()) {
       try { // Fixing: https://code.google.com/p/crawler4j/issues/detail?id=174
         // By always trusting the ssl certificate
@@ -115,12 +131,14 @@ public class PageFetcher extends Configurable {
     connectionManager.setMaxTotal(config.getMaxTotalConnections());
     connectionManager.setDefaultMaxPerRoute(config.getMaxConnectionsPerHost());
 
+    //创建HttpClinetBuilder对象,用于创建HttpClient对象
     HttpClientBuilder clientBuilder = HttpClientBuilder.create();
     clientBuilder.setDefaultRequestConfig(requestConfig);
     clientBuilder.setConnectionManager(connectionManager);
     clientBuilder.setUserAgent(config.getUserAgentString());
     clientBuilder.setDefaultHeaders(config.getDefaultHeaders());
 
+    //判断是否创建代理
     if (config.getProxyHost() != null) {
       if (config.getProxyUsername() != null) {
         BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
@@ -135,17 +153,25 @@ public class PageFetcher extends Configurable {
       logger.debug("Working through Proxy: {}", proxy.getHostName());
     }
 
+    //创建安全的HttpClient对象
     httpClient = clientBuilder.build();
     if ((config.getAuthInfos() != null) && !config.getAuthInfos().isEmpty()) {
-      doAuthetication(config.getAuthInfos());
+      //验证身份权限
+    	doAuthetication(config.getAuthInfos());
     }
 
     if (connectionMonitorThread == null) {
+    	//创建监控线程
       connectionMonitorThread = new IdleConnectionMonitorThread(connectionManager);
     }
+    //开启监控线程
     connectionMonitorThread.start();
   }
 
+  /**
+   * 三种权限验证
+   * @param authInfos
+   */
   private void doAuthetication(List<AuthInfo> authInfos) {
     for (AuthInfo authInfo : authInfos) {
       if (authInfo.getAuthenticationType() == AuthInfo.AuthenticationType.BASIC_AUTHENTICATION) {
@@ -217,6 +243,14 @@ public class PageFetcher extends Configurable {
     }
   }
 
+  /**
+   * 抓取页面，保存到PageFetchResult对象中
+   * @param webUrl
+   * @return
+   * @throws InterruptedException
+   * @throws IOException
+   * @throws PageBiggerThanMaxSizeException
+   */
   public PageFetchResult fetchPage(WebURL webUrl)
       throws InterruptedException, IOException, PageBiggerThanMaxSizeException {
     // Getting URL, setting headers & content
@@ -224,8 +258,10 @@ public class PageFetcher extends Configurable {
     String toFetchURL = webUrl.getURL();
     HttpUriRequest request = null;
     try {
+    	//创建request对象
       request = newHttpUriRequest(toFetchURL);
       // Applying Politeness delay
+      //应用礼貌间隔
       synchronized (mutex) {
         long now = (new Date()).getTime();
         if ((now - lastFetchTime) < config.getPolitenessDelay()) {
@@ -234,6 +270,9 @@ public class PageFetcher extends Configurable {
         lastFetchTime = (new Date()).getTime();
       }
 
+      /**
+       * 将response中的元素，保存到FetchResult对象中（相当于把页面下载了）
+       */
       CloseableHttpResponse response = httpClient.execute(request);
       fetchResult.setEntity(response.getEntity());
       fetchResult.setResponseHeaders(response.getAllHeaders());
@@ -242,6 +281,7 @@ public class PageFetcher extends Configurable {
       int statusCode = response.getStatusLine().getStatusCode();
 
       // If Redirect ( 3xx )
+      //判断返回的状态码
       if (statusCode == HttpStatus.SC_MOVED_PERMANENTLY || statusCode == HttpStatus.SC_MOVED_TEMPORARILY ||
           statusCode == HttpStatus.SC_MULTIPLE_CHOICES || statusCode == HttpStatus.SC_SEE_OTHER ||
           statusCode == HttpStatus.SC_TEMPORARY_REDIRECT ||
@@ -262,6 +302,7 @@ public class PageFetcher extends Configurable {
         }
 
         // Checking maximum size
+        //检查页面大小是否超过最大限定值
         if (fetchResult.getEntity() != null) {
           long size = fetchResult.getEntity().getContentLength();
           if (size == -1) {
@@ -286,7 +327,7 @@ public class PageFetcher extends Configurable {
 
     } finally { // occurs also with thrown exceptions
       if ((fetchResult.getEntity() == null) && (request != null)) {
-        request.abort();
+        request.abort();//丢弃请求
       }
     }
   }

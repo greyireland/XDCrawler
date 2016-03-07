@@ -14,6 +14,11 @@ import javax.swing.text.html.FormSubmitEvent.MethodType;
  * <br>
  * This class contains all of the mutual authentication data for all authentication types
  */
+/**
+ * 认证信息，如登陆网站需要用户名，密码
+ * @author tengyu
+ *
+ */
 public abstract class AuthInfo {
   public enum AuthenticationType {
     BASIC_AUTHENTICATION,

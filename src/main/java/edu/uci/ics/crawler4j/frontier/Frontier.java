@@ -122,6 +122,11 @@ public class Frontier extends Configurable {
     }
   }
 
+  /**
+   * 获取下一批URLs
+   * @param max
+   * @param result
+   */
   public void getNextURLs(int max, List<WebURL> result) {
     while (true) {
       synchronized (mutex) {

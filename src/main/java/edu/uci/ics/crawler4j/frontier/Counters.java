@@ -39,6 +39,11 @@ import edu.uci.ics.crawler4j.util.Util;
 /**
  * @author Yasser Ganjisaffar
  */
+/**
+ * 计数器
+ * @author tengyu
+ *
+ */
 public class Counters extends Configurable {
   private static final Logger logger = LoggerFactory.getLogger(Counters.class);
 
@@ -48,6 +53,7 @@ public class Counters extends Configurable {
   }
 
   private static final String DATABASE_NAME = "Statistics";
+  //使用BerkeleyDB数据库
   protected Database statisticsDB = null;
   protected Environment env;
 
@@ -71,6 +77,7 @@ public class Counters extends Configurable {
       dbConfig.setAllowCreate(true);
       dbConfig.setTransactional(true);
       dbConfig.setDeferredWrite(false);
+      //实例化数据库对象
       statisticsDB = env.openDatabase(null, DATABASE_NAME, dbConfig);
 
       OperationStatus result;
@@ -84,7 +91,7 @@ public class Counters extends Configurable {
         if (value.getData().length > 0) {
           String name = new String(key.getData());
           long counterValue = Util.byteArray2Long(value.getData());
-          counterValues.put(name, counterValue);
+          counterValues.put(name, counterValue);//添加到计数器集合中
         }
         result = cursor.getNext(key, value, null);
       }

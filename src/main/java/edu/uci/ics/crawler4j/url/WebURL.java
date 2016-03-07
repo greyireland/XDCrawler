@@ -25,7 +25,9 @@ import com.sleepycat.persist.model.PrimaryKey;
 /**
  * @author Yasser Ganjisaffar
  */
-
+/*
+ * WebURL实体类
+ */
 @Entity
 public class WebURL implements Serializable {
 
@@ -33,16 +35,45 @@ public class WebURL implements Serializable {
 
   @PrimaryKey
   private String url;
-
+  /*
+   * 文章id
+   */
   private int docid;
+  /*
+   * 父文章id
+   */
   private int parentDocid;
+  /*
+   * 父文章Url链接
+   */
   private String parentUrl;
+  /*
+   * Url链接深度
+   */
   private short depth;
+  /*
+   * Url域名地址
+   */
   private String domain;
+  /*
+   * 子域名
+   */
   private String subDomain;
+  /*
+   * 路径，即链接前面一部分
+   */
   private String path;
+  /*
+   * 锚点，即是链接的文字<a>百度</a>
+   */
   private String anchor;
+  /*
+   * 优先级
+   */
   private byte priority;
+  /*
+   * 标签
+   */
   private String tag;
 
 
@@ -70,7 +101,7 @@ public class WebURL implements Serializable {
     int domainStartIdx = url.indexOf("//") + 2;
     int domainEndIdx = url.indexOf('/', domainStartIdx);
     domainEndIdx = (domainEndIdx > domainStartIdx) ? domainEndIdx : url.length();
-    domain = url.substring(domainStartIdx, domainEndIdx);
+    domain = url.substring(domainStartIdx, domainEndIdx);//http://www.baidu.com/index.html
     subDomain = "";
     String[] parts = domain.split("\\.");
     if (parts.length > 2) {

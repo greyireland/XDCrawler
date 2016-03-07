@@ -34,10 +34,14 @@ public class PageFetchResult {
 
   protected static final Logger logger = LoggerFactory.getLogger(PageFetchResult.class);
 
+  //返回的状态码
   protected int statusCode;
+  //返回的response实体对象
   protected HttpEntity entity = null;
   protected Header[] responseHeaders = null;
+  //抓取的URL
   protected String fetchedUrl = null;
+  //302跳转的URL
   protected String movedToUrl = null;
 
   public int getStatusCode() {
@@ -72,6 +76,11 @@ public class PageFetchResult {
     this.fetchedUrl = fetchedUrl;
   }
 
+  /**
+   * 将PageFetchResult的数据提取到page对象中
+   * @param page
+   * @return
+   */
   public boolean fetchContent(Page page) {
     try {
       page.load(entity);

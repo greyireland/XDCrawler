@@ -32,6 +32,11 @@ import edu.uci.ics.crawler4j.url.WebURL;
  *
  * @author Yasser Ganjisaffar
  */
+/**
+ * 页面实体类
+ * @author tengyu
+ *
+ */
 public class Page {
 
   /**
@@ -42,20 +47,32 @@ public class Page {
   /**
    * Redirection flag
    */
+  /**
+   * 是否重定向
+   */
   protected boolean redirect;
 
   /**
    * The URL to which this page will be redirected to
+   */
+  /**
+   * 重定向地址
    */
   protected String redirectedToUrl;
 
   /**
    * Status of the page
    */
+  /**
+   * 状态码
+   */
   protected int statusCode;
 
   /**
    * The content of this page in binary format.
+   */
+  /**
+   * 页面内容，以字节数组保存
    */
   protected byte[] contentData;
 
@@ -63,11 +80,17 @@ public class Page {
    * The ContentType of this page.
    * For example: "text/html; charset=UTF-8"
    */
+  /**
+   * 页面内容类型和编码For example: "text/html; charset=UTF-8"
+   */
   protected String contentType;
 
   /**
    * The encoding of the content.
    * For example: "gzip"
+   */
+  /**
+   * 内容压缩类型，如gzip
    */
   protected String contentEncoding;
 
@@ -75,20 +98,32 @@ public class Page {
    * The charset of the content.
    * For example: "UTF-8"
    */
+  /**
+   * 字符编码，如utf-8
+   */
   protected String contentCharset;
 
   /**
    * Language of the Content.
+   */
+  /**
+   * 语言
    */
   private String language;
 
   /**
    * Headers which were present in the response of the fetch request
    */
+  /**
+   * 相应头
+   */
   protected Header[] fetchResponseHeaders;
 
   /**
    * The parsed data populated by parsers
+   */
+  /**
+   * 转换的数据
    */
   protected ParseData parseData;
 
@@ -102,6 +137,11 @@ public class Page {
    *
    * @param entity HttpEntity
    * @throws Exception when load fails
+   */
+  /**
+   * 将httpEntity实体转换为page类
+   * @param entity
+   * @throws Exception
    */
   public void load(HttpEntity entity) throws Exception {
 

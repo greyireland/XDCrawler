@@ -21,6 +21,11 @@ import java.util.Set;
 
 import edu.uci.ics.crawler4j.url.WebURL;
 
+/**
+ * 解析数据接口
+ * @author tengyu
+ *
+ */
 public interface ParseData {
 
   Set<WebURL> getOutgoingUrls();

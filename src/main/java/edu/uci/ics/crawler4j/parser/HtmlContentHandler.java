@@ -78,6 +78,9 @@ public class HtmlContentHandler extends DefaultHandler {
     outgoingUrls = new ArrayList<>();
   }
 
+  /**
+   * 开始读取元素时，执行下面函数
+   */
   @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
     Element element = HtmlFactory.getElement(localName);
@@ -146,6 +149,9 @@ public class HtmlContentHandler extends DefaultHandler {
     outgoingUrls.add(curUrl);
   }
 
+  /**
+   * 结束读取元素时执行
+   */
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
     Element element = HtmlFactory.getElement(localName);

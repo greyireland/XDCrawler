@@ -41,7 +41,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.uci.ics.crawler4j.url.WebURL;
-
+/**
+ * 使用外部解析工具Tika自动解析二进制文件
+ * @author tengyu
+ *
+ */
 public class BinaryParseData implements ParseData {
 
   private static final Logger logger = LoggerFactory.getLogger(BinaryParseData.class);
@@ -52,7 +56,9 @@ public class BinaryParseData implements ParseData {
   private static final SAXTransformerFactory SAX_TRANSFORMER_FACTORY =
       (SAXTransformerFactory) TransformerFactory.newInstance();
 
+  //传递解析上下文给，tika parser（tika一个apache内容解析项目)
   private final ParseContext context = new ParseContext();
+  //外链和html数据
   private Set<WebURL> outgoingUrls = new HashSet<>();
   private String html = null;
 

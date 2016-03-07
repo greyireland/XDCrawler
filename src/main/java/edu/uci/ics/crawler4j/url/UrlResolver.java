@@ -17,7 +17,11 @@
 
 package edu.uci.ics.crawler4j.url;
 
-
+/**
+ * URL提取器
+ * @author tengyu
+ *
+ */
 public final class UrlResolver {
 
   /**

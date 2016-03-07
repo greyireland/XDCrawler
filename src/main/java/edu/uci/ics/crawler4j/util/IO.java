@@ -27,11 +27,15 @@ import org.slf4j.LoggerFactory;
  */
 public class IO {
   private static final Logger logger = LoggerFactory.getLogger(IO.class);
-
+  /*
+   * 删除文件夹
+   */
   public static boolean deleteFolder(File folder) {
     return deleteFolderContents(folder) && folder.delete();
   }
-
+  /*
+   * 删除文件夹和文件内容
+   */
   public static boolean deleteFolderContents(File folder) {
     logger.debug("Deleting content of: " + folder.getAbsolutePath());
     File[] files = folder.listFiles();

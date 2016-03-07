@@ -26,6 +26,11 @@ import edu.uci.ics.crawler4j.url.WebURL;
 /**
  * @author Yasser Ganjisaffar
  */
+/**
+ * WebURL和TupleInput数据转换
+ * @author tengyu
+ *
+ */
 public class WebURLTupleBinding extends TupleBinding<WebURL> {
 
   @Override

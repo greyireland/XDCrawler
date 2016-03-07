@@ -60,6 +60,7 @@ public class RobotstxtServer {
   }
 
   /** Please note that in the case of a bad URL, TRUE will be returned */
+  /**是否允许抓取*/
   public boolean allows(WebURL webURL) {
     if (config.isEnabled()) {
       try {
